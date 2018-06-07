@@ -54,7 +54,7 @@ public class MybatisIdentityLinkDataManager extends AbstractDataManager<Identity
             return getListFromCache(identityLinksByTaskIdMatcher, taskId);
         }
         
-        return getList("selectIdentityLinksByTaskId", taskId, identityLinkByProcessInstanceMatcher, true);
+        return getList("selectIdentityLinksByTaskId", taskId, identityLinksByTaskIdMatcher, true);
     }
 
     @Override
