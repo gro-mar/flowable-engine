@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<BPSimData xmlns="http://www.bpsim.org/schemas/2.0">
+    <Scenario name="scenarioParameters" id="scenarioParametersId">
+        <ElementParameters id="elementParamsId" elementRef="processModelElement">
+            <TimeParameters>
+                <ProcessingTime>
+                    <UniformDistribution max="2" min="1" timeUnit="day"/>
+                </ProcessingTime>
+            </TimeParameters>
+        </ElementParameters>
+    </Scenario>
+</BPSimData>

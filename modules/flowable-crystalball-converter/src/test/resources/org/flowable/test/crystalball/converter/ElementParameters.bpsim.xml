@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<BPSimData xmlns="http://www.bpsim.org/schemas/2.0">
+    <Scenario name="scenarioParameters" id="scenarioParametersId">
+        <ElementParameters id="elementParamsId" elementRef="processModelElement">
+        </ElementParameters>
+    </Scenario>
+</BPSimData>

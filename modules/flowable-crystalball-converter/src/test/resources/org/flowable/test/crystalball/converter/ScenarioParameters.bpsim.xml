@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<BPSimData xmlns="http://www.bpsim.org/schemas/2.0">
+    <Scenario name="scenarioParameters" id="scenarioParametersId">
+        <ScenarioParameters seed="1" replication="2" baseTimeUnit="day" baseCurrencyUnit="EUR">
+        </ScenarioParameters>
+    </Scenario>
+</BPSimData>
