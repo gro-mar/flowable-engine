@@ -430,7 +430,7 @@ public class RuntimeActivityInstanceTest extends PluggableFlowableTestCase {
             task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
         }
         
-        waitForHistoryJobExecutorToProcessAllJobs(7000, 100);
+        waitForHistoryJobExecutorToProcessAllJobs(14000, 200);
 
         // Verify history
         List<ActivityInstance> taskActivityInstances = runtimeService.createActivityInstanceQuery().activityType("userTask").list();

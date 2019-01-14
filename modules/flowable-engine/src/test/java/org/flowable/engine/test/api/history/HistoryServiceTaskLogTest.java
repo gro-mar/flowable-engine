@@ -381,7 +381,12 @@ public class HistoryServiceTaskLogTest {
         task = taskService.createTaskBuilder().create();
         HistoryTestHelper.isHistoricTaskLoggingEnabled((ProcessEngineConfigurationImpl) processEngineConfiguration);
 
-        Date todayDate = new Date();
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        Date todayDate = gregorianCalendar.getTime();
+        gregorianCalendar.add(GregorianCalendar.MILLISECOND, 5);
+        Date afterToday = gregorianCalendar.getTime();
+        gregorianCalendar.add(GregorianCalendar.MILLISECOND, -10);
+        Date beforeToday = gregorianCalendar.getTime();
         HistoricTaskLogEntryBuilder historicTaskLogEntryBuilder = historyService.createHistoricTaskLogEntryBuilder(task);
         historicTaskLogEntryBuilder.timeStamp(todayDate);
         historicTaskLogEntryBuilder.userId("testUser");
@@ -398,7 +403,8 @@ public class HistoryServiceTaskLogTest {
         assertThat(historicTaskLogEntry.getLogNumber()).isNotNull();
         assertThat(historicTaskLogEntry.getUserId()).isEqualTo("testUser");
         assertThat(historicTaskLogEntry.getTaskId()).isEqualTo(task.getId());
-        assertThat(historicTaskLogEntry.getTimeStamp()).isEqualTo(todayDate);
+        // mssql precision is 3.33ms
+        assertThat(historicTaskLogEntry.getTimeStamp()).isBetween(beforeToday, afterToday);
         assertThat(historicTaskLogEntry.getData()).isEqualTo("testData");
         historyService.deleteHistoricTaskLogEntry(logEntries.get(0).getLogNumber());
     }
@@ -751,7 +757,7 @@ public class HistoryServiceTaskLogTest {
         try {
             List<HistoricTaskLogEntry> logEntries = historicTaskLogEntryQuery.list();
             assertThat(logEntries.size()).isEqualTo(3);
-            assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactly(task.getId(), task.getId(), task.getId());
+            assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactlyInAnyOrder(task.getId(), task.getId(), task.getId());
 
             assertThat(historicTaskLogEntryQuery.count()).isEqualTo(3L);
 
@@ -837,7 +843,7 @@ public class HistoryServiceTaskLogTest {
         try {
             List<HistoricTaskLogEntry> logEntries = historicTaskLogEntryQuery.list();
             assertThat(logEntries.size()).isEqualTo(5);
-            assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactly(task.getId(), anotherTask.getId(), task.getId(), task.getId(), task.getId());
+            assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactlyInAnyOrder(task.getId(), anotherTask.getId(), task.getId(), task.getId(), task.getId());
     
             assertThat(historicTaskLogEntryQuery.count()).isEqualTo(5);
     
@@ -890,7 +896,7 @@ public class HistoryServiceTaskLogTest {
             List<HistoricTaskLogEntry> logEntries = historicTaskLogEntryQuery.
                 list();
             assertThat(logEntries.size()).isEqualTo(3);
-            assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactly(anotherTask.getId(), task.getId(), task.getId());
+            assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactlyInAnyOrder(anotherTask.getId(), task.getId(), task.getId());
 
             assertThat(
                 historicTaskLogEntryQuery.count()
@@ -937,7 +943,9 @@ public class HistoryServiceTaskLogTest {
         ProcessEngineConfiguration processEngineConfiguration) {
         HistoricTaskLogEntryBuilder historicTaskLogEntryBuilder = historyService.createHistoricTaskLogEntryBuilder();
         historicTaskLogEntryBuilder.taskId("1").timeStamp(getInsertDate()).create();
+        HistoryTestHelper.isHistoricTaskLoggingEnabled((ProcessEngineConfigurationImpl) processEngineConfiguration);
         historicTaskLogEntryBuilder.taskId("2").timeStamp(getCompareAfterDate()).create();
+        HistoryTestHelper.isHistoricTaskLoggingEnabled((ProcessEngineConfigurationImpl) processEngineConfiguration);
         historicTaskLogEntryBuilder.taskId("3").timeStamp(getCompareBeforeDate()).create();
         HistoryTestHelper.isHistoricTaskLoggingEnabled((ProcessEngineConfigurationImpl) processEngineConfiguration);
 
