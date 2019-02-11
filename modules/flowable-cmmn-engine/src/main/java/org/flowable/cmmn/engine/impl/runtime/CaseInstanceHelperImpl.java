@@ -257,7 +257,7 @@ public class CaseInstanceHelperImpl implements CaseInstanceHelper {
                         // The caseVariables are the variables that should be used when starting the case
                         // the actual variables should instead be used when creating the form instances
                         formService.createFormInstanceWithScopeId(startFormVariables, formInfo, null, caseInstanceEntity.getId(),
-                            ScopeTypes.CMMN, caseInstanceEntity.getCaseDefinitionId(), caseInstanceEntity.getTenantId());
+                            ScopeTypes.CMMN, caseInstanceEntity.getCaseDefinitionId(), caseInstanceEntity.getTenantId(), caseInstanceBuilder.getOutcome());
                         formFieldHandler.handleFormFieldsOnSubmit(formInfo, null, null,
                             caseInstanceEntity.getId(), ScopeTypes.CMMN, caseVariables, caseInstanceEntity.getTenantId());
                     }
@@ -303,7 +303,7 @@ public class CaseInstanceHelperImpl implements CaseInstanceHelper {
         Case caseModel = cmmnModel.getCaseById(caseDefinition.getKey());
 
         if (caseModel.getInitiatorVariableName() != null) {
-            caseInstanceEntity.setVariable(caseModel.getInitiatorVariableName(), Authentication.getAuthenticatedUserId());
+            caseInstanceEntity.setVariable(caseModel.getInitiatorVariableName(), authenticatedUserId);
         }
 
         return caseInstanceEntity;
