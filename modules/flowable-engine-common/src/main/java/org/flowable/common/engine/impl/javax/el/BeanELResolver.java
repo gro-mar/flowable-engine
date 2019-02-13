@@ -427,6 +427,11 @@ public class BeanELResolver extends ELResolver {
 				if (method == null) {
 					throw new PropertyNotWritableException("Cannot write property: " + property);
 				}
+				// todo avoid (id, parentId, planInstanceItem, scopeId, scopeType, scopeDefinitionId, definitionId, parentTaskId) change for case execution task
+				InternalMethod internalMethod = method.getAnnotation(InternalMethod.class);
+				if (internalMethod != null && !internalMethod.useInElResolver()) {
+					throw new PropertyNotWritableException("Cannot write property: " + property);
+				}
 				try {
 					method.invoke(base, value);
 				} catch (InvocationTargetException e) {

@@ -18,8 +18,10 @@ import static org.junit.Assert.assertThat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.flowable.common.engine.api.FlowableException;
 import org.flowable.common.engine.api.delegate.Expression;
 import org.flowable.common.engine.impl.identity.Authentication;
+import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
 import org.flowable.engine.impl.test.PluggableFlowableTestCase;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.engine.test.Deployment;
@@ -86,4 +88,25 @@ public class ExpressionManagerTest extends PluggableFlowableTestCase {
             Authentication.setAuthenticatedUserId(null);
         }
     }
+
+    @Test
+    @Deployment(resources = "org/flowable/engine/test/api/runtime/oneTaskProcess.bpmn20.xml")
+    public void testSetIdByExpression() {
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+
+        Expression expression = this.processEngineConfiguration.getExpressionManager().createExpression("#{execution.id}");
+        try {
+            managementService.executeCommand(commandContext -> {
+                    expression.setValue("newValue",
+                        (ExecutionEntity) runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).includeProcessVariables()
+                            .singleResult());
+                    return null;
+                }
+            );
+            fail("Setting Id should be forbidden");
+        } catch(FlowableException e) {
+            //expected Exception
+        }
+    }
+
 }

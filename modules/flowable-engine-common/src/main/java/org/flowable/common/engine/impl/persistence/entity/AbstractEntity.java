@@ -13,6 +13,7 @@
 package org.flowable.common.engine.impl.persistence.entity;
 
 import org.flowable.common.engine.impl.db.HasRevision;
+import org.flowable.common.engine.impl.javax.el.InternalMethod;
 
 /**
  * Abstract superclass for the common properties of all {@link Entity} implementations.
@@ -36,6 +37,7 @@ public abstract class AbstractEntity implements Entity, HasRevision {
     }
 
     @Override
+    @InternalMethod
     public void setId(String id) {
         this.id = id;
     }
