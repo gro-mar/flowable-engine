@@ -155,6 +155,9 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
 
                 }
             }
+
+            propertiesNode.put(PROPERTY_ASYNCHRONOUS, flowNode.isAsynchronous());
+            propertiesNode.put(PROPERTY_EXCLUSIVE, !flowNode.isNotExclusive());
         }
 
         if (baseElement instanceof Activity) {
@@ -164,8 +167,6 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
                 outgoingArrayNode.add(BpmnJsonConverterUtil.createResourceNode(boundaryEvent.getId()));
             }
 
-            propertiesNode.put(PROPERTY_ASYNCHRONOUS, activity.isAsynchronous());
-            propertiesNode.put(PROPERTY_EXCLUSIVE, !activity.isNotExclusive());
             propertiesNode.put(PROPERTY_FOR_COMPENSATION,activity.isForCompensation());
 
             if (activity.getLoopCharacteristics() != null) {
@@ -320,8 +321,6 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
 
             if (baseElement instanceof Activity) {
                 Activity activity = (Activity) baseElement;
-                activity.setAsynchronous(getPropertyValueAsBoolean(PROPERTY_ASYNCHRONOUS, elementNode));
-                activity.setNotExclusive(!getPropertyValueAsBoolean(PROPERTY_EXCLUSIVE, elementNode));
                 activity.setForCompensation(getPropertyValueAsBoolean(PROPERTY_FOR_COMPENSATION, elementNode));
                 String multiInstanceType = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_TYPE, elementNode);
                 String multiInstanceCardinality = getPropertyValueAsString(PROPERTY_MULTIINSTANCE_CARDINALITY, elementNode);
@@ -346,9 +345,6 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
                 }
 
             } else if (baseElement instanceof Gateway) {
-                Gateway gateway= (Gateway) baseElement;
-                gateway.setAsynchronous(getPropertyValueAsBoolean(PROPERTY_ASYNCHRONOUS, elementNode));
-                gateway.setNotExclusive(!getPropertyValueAsBoolean(PROPERTY_EXCLUSIVE, elementNode));
                 JsonNode flowOrderNode = getProperty(PROPERTY_SEQUENCEFLOW_ORDER, elementNode);
 
                 if (flowOrderNode != null) {
@@ -363,6 +359,12 @@ public abstract class BaseBpmnJsonConverter implements EditorJsonConstants, Sten
                         }
                     }
                 }
+            }
+
+            if (baseElement instanceof FlowNode) {
+                FlowNode flowNode = (FlowNode) baseElement;
+                flowNode.setAsynchronous(getPropertyValueAsBoolean(PROPERTY_ASYNCHRONOUS, elementNode));
+                flowNode.setNotExclusive(!getPropertyValueAsBoolean(PROPERTY_EXCLUSIVE, elementNode));
             }
         }
 
