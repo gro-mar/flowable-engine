@@ -853,6 +853,35 @@ public class HistoryServiceTaskLogTest {
         }
     }
 
+    protected void assertThatAllTaskLogIsFetched(TaskService taskService, HistoricTaskLogEntryBuilder historicTaskLogEntryBuilder,
+                                              HistoricTaskLogEntryQuery historicTaskLogEntryQuery, ManagementService managementService, ProcessEngineConfiguration processEngineConfiguration) {
+
+        task = taskService.createTaskBuilder().
+                assignee("testAssignee").
+                create();
+        Task anotherTask = taskService.createTaskBuilder().create();
+        historicTaskLogEntryBuilder.taskId(task.getId()).create();
+        historicTaskLogEntryBuilder.taskId(task.getId()).create();
+        historicTaskLogEntryBuilder.taskId(task.getId()).create();
+
+        try {
+            if (HistoryTestHelper.isHistoricTaskLoggingEnabled(processEngineConfiguration)) {
+                List<HistoricTaskLogEntry> logEntries = historicTaskLogEntryQuery.list();
+                assertThat(logEntries.size()).isEqualTo(5);
+                assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactly(task.getId(), anotherTask.getId(), task.getId(), task.getId(), task.getId());
+
+                assertThat(historicTaskLogEntryQuery.count()).isEqualTo(5l);
+
+                List<HistoricTaskLogEntry> pagedLogEntries = historicTaskLogEntryQuery.listPage(1, 1);
+                assertThat(pagedLogEntries.size()).isEqualTo(1);
+                assertThat(pagedLogEntries.get(0)).isEqualToComparingFieldByField(logEntries.get(1));
+            }
+
+        } finally {
+            deleteTaskWithLogEntries(taskService, managementService, processEngineConfiguration, anotherTask.getId());
+        }
+    }
+
     @Test
     public void queryForTaskLogEntriesByType(TaskService taskService, HistoryService historyService,
                                              ManagementService managementService, ProcessEngineConfiguration processEngineConfiguration) {
@@ -897,7 +926,7 @@ public class HistoryServiceTaskLogTest {
     public void queryForTaskLogEntriesByFromTimeStamp(TaskService taskService, HistoryService historyService,
                                                       ManagementService managementService, ProcessEngineConfiguration processEngineConfiguration) {
 
-        assertThatTaskLogIsFetched(taskService, historyService.createHistoricTaskLogEntryBuilder().timeStamp(getInsertDate()),
+        assertThatAllTaskLogIsFetched(taskService, historyService.createHistoricTaskLogEntryBuilder().timeStamp(getInsertDate()),
                 historyService.createHistoricTaskLogEntryQuery().from(getCompareBeforeDate()), managementService, processEngineConfiguration);
     }
 
@@ -917,10 +946,10 @@ public class HistoryServiceTaskLogTest {
         try {
             if (HistoryTestHelper.isHistoricTaskLoggingEnabled(processEngineConfiguration)) {
                 List<HistoricTaskLogEntry> logEntries = historicTaskLogEntryQuery.list();
-                assertThat(logEntries.size()).isEqualTo(5);
-                assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactly(task.getId(), anotherTask.getId(), task.getId(), task.getId(), task.getId());
+                assertThat(logEntries.size()).isEqualTo(3);
+                assertThat(logEntries).extracting(HistoricTaskLogEntry::getTaskId).containsExactly(task.getId(), task.getId(), task.getId());
 
-                assertThat(historicTaskLogEntryQuery.count()).isEqualTo(5);
+                assertThat(historicTaskLogEntryQuery.count()).isEqualTo(3);
 
                 List<HistoricTaskLogEntry> pagedLogEntries = historicTaskLogEntryQuery.listPage(1, 1);
                 assertThat(pagedLogEntries.size()).isEqualTo(1);
