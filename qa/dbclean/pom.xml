@@ -8,7 +8,7 @@
   <artifactId>flowable-dbclean</artifactId>
 
   <packaging>pom</packaging>
-  <version>6.4.2-THL</version>
+  <version>6.4.2-THL.1</version>
 
   <dependencies>
     <dependency>
