@@ -9,7 +9,7 @@ matrix:
     script:
       cd scripts && ./run-flowable5-tests.sh
   - jdk: openjdk11
-    dist: xenial
+    dist: trusty
   - jdk: openjdk12
   - jdk: openjdk13
   - jdk: openjdk-ea
