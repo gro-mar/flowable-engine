@@ -825,6 +825,17 @@
         "description" : "BPMN.PROPERTYPACKAGES.HTTPTASKRESULTVARIABLEPREFIXPACKAGE.HTTPTASKRESULTVARIABLEPREFIX.DESCRIPTION",
         "popular" : true
       } ]
+    },
+    {
+      "name" : "casetaskcasereferencepackage",
+      "properties" : [ {
+        "id" : "casetaskcasereference",
+        "type" : "Complex",
+        "title" : "BPMN.PROPERTYPACKAGES.CASETASKCASEREFERENCEPACKAGE.CASETASKCASEREFERENCE.TITLE",
+        "value" : "",
+        "description" : "BPMN.PROPERTYPACKAGES.CASETASKCASEREFERENCEPACKAGE.CASETASKCASEREFERENCE.DESCRIPTION",
+        "popular" : true
+      } ]
     }, {
       "name" : "callactivitycalledelementpackage",
       "properties" : [ {
@@ -953,6 +964,26 @@
         "title" : "BPMN.PROPERTYPACKAGES.CALLACTIVITYCOMPLETEASYNCPACKAGE.CALLACTIVITYCOMPLETEASYNC.TITLE",
         "value" : "",
         "description" : "BPMN.PROPERTYPACKAGES.CALLACTIVITYCOMPLETEASYNCPACKAGE.CALLACTIVITYCOMPLETEASYNC.DESCRIPTION",
+        "popular" : true
+      } ]
+    }, {
+      "name" : "casetaskinparameterspackage",
+      "properties" : [ {
+        "id" : "casetaskinparameters",
+        "type" : "Complex",
+        "title" : "CMMN.PROPERTYPACKAGES.CASETASKINPARAMETERSPACKAGE.CASETASKINPARAMETERS.TITLE",
+        "value" : "",
+        "description" : "CMMN.PROPERTYPACKAGES.CASETASKINPARAMETERSPACKAGE.CASETASKINPARAMETERS.DESCRIPTION",
+        "popular" : true
+      } ]
+    }, {
+      "name" : "casetaskoutparameterspackage",
+      "properties" : [ {
+        "id" : "casetaskoutparameters",
+        "type" : "Complex",
+        "title" : "CMMN.PROPERTYPACKAGES.CASETASKOUTPARAMETERSPACKAGE.CASETASKOUTPARAMETERS.TITLE",
+        "value" : "",
+        "description" : "CMMN.PROPERTYPACKAGES.CASETASKOUTPARAMETERSPACKAGE.CASETASKOUTPARAMETERS.DESCRIPTION",
         "popular" : true
       } ]
     }, {
@@ -1897,6 +1928,17 @@
       "hiddenPropertyPackages" : [ ],
       "roles" : [ "Activity", "sequence_start", "sequence_end", "all" ]
     }, {
+    "type" : "node",
+    "id" : "CaseTask",
+    "title" : "BPMN.STENCILS.CASETASK.TITLE",
+    "description" : "BPMN.STENCILS.CASETASK.DESCRIPTION",
+    "view" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:oryx=\"http://www.b3mn.org/oryx\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"102\" height=\"82\" version=\"1.0\"> <defs></defs> <oryx:magnets> <oryx:magnet oryx:cx=\"1\" oryx:cy=\"20\" oryx:anchors=\"left\" /> <oryx:magnet oryx:cx=\"1\" oryx:cy=\"40\" oryx:anchors=\"left\" /> <oryx:magnet oryx:cx=\"1\" oryx:cy=\"60\" oryx:anchors=\"left\" /> <oryx:magnet oryx:cx=\"25\" oryx:cy=\"79\" oryx:anchors=\"bottom\" /> <oryx:magnet oryx:cx=\"50\" oryx:cy=\"79\" oryx:anchors=\"bottom\" /> <oryx:magnet oryx:cx=\"75\" oryx:cy=\"79\" oryx:anchors=\"bottom\" /> <oryx:magnet oryx:cx=\"99\" oryx:cy=\"20\" oryx:anchors=\"right\" /> <oryx:magnet oryx:cx=\"99\" oryx:cy=\"40\" oryx:anchors=\"right\" /> <oryx:magnet oryx:cx=\"99\" oryx:cy=\"60\" oryx:anchors=\"right\" /> <oryx:magnet oryx:cx=\"25\" oryx:cy=\"1\" oryx:anchors=\"top\" /> <oryx:magnet oryx:cx=\"50\" oryx:cy=\"1\" oryx:anchors=\"top\" /> <oryx:magnet oryx:cx=\"75\" oryx:cy=\"1\" oryx:anchors=\"top\" /> <oryx:magnet oryx:cx=\"50\" oryx:cy=\"40\" oryx:default=\"yes\" /> </oryx:magnets> <g pointer-events=\"fill\" oryx:minimumSize=\"50 40\"> <rect id=\"text_frame\" oryx:anchors=\"bottom top right left\" x=\"1\" y=\"1\" width=\"94\" height=\"79\" rx=\"10\" ry=\"10\" stroke=\"none\" stroke-width=\"0\" fill=\"none\" /> <rect id=\"bg_frame\" oryx:resize=\"vertical horizontal\" x=\"0\" y=\"0\" width=\"100\" height=\"80\" rx=\"10\" ry=\"10\" stroke=\"#bbbbbb\" stroke-width=\"1\" fill=\"#f9f9f9\" /> <text font-size=\"12\" id=\"text_name\" x=\"50\" y=\"40\" oryx:align=\"middle center\" oryx:fittoelem=\"text_frame\" stroke=\"#373e48\"> </text> <g id=\"caseTask\" transform=\"scale(0.7,0.7) translate(8,8)\"> <path oryx:anchors=\"top left\" style=\"opacity:1;fill:#000000;stroke:#000000\" d=\"M5 4 L9 0 L18 0 L 21 3z\"/> <path oryx:anchors=\"top left\" style=\"opacity:1;fill:#F4F6F7;stroke:#000000\" d=\"M1 23 L1 4 L30 4 L30 23z\"/> </g> <g id=\"required\" display=\"inherit\" stroke=\"#000000\"><g oryx:anchors=\"bottom\"><path fill=\"none\" oryx:anchors=\"bottom\" d=\"M49 67 L49 74 M49 76 L49 78\" transform=\"translate(-11,0)\"></path></g></g> <g id=\"repetition\" oryx:anchors=\"bottom\"><path oryx:anchors=\"bottom\" fill=\"none\" stroke=\"#bbbbbb\" stroke-width=\"2\" d=\"M47 68 v10 M50 68 v10 M53 68 v10\" transform=\"translate(10,0)\"/></g><g id=\"manualActivation\" display=\"inherit\" stroke=\"#000000\" oryx:anchors=\"bottom\"><path oryx:anchors=\"bottom\" fill=\"none\" d=\"M45.5 68 L54 73 L45.5 77 L45.5 69z\" transform=\"translate(-2,0)\"></path></g></g></svg>",
+    "icon" : "activity/casetask.png",
+    "groups" : [ "BPMN.STENCILS.GROUPS.ACTIVITIES" ],
+    "propertyPackages" : [ "overrideidpackage", "namepackage", "documentationpackage", "asynchronousdefinitionpackage", "exclusivedefinitionpackage", "executionlistenerspackage", "multiinstance_typepackage", "multiinstance_cardinalitypackage", "multiinstance_collectionpackage", "multiinstance_variablepackage", "multiinstance_conditionpackage", "isforcompensationpackage", "httptaskrequestmethodpackage", "httptaskrequesturlpackage", "httptaskrequestheaderspackage", "httptaskrequestbodypackage", "httptaskrequestbodyencodingpackage", "httptaskrequesttimeoutpackage", "httptaskdisallowredirectspackage", "httptaskfailstatuscodespackage", "httptaskhandlestatuscodespackage", "httptaskignoreexceptionpackage", "httptaskresponsevariablenamepackage", "httptasksaverequestvariablespackage", "httptasksaveresponseparameterspackage", "httptaskresultvariableprefixpackage", "httptasksaveresponseparameterstransientpackage", "httptasksaveresponseasjsonpackage", "skipexpressionpackage" ],
+    "hiddenPropertyPackages" : [ ],
+    "roles" : [ "Activity", "sequence_start", "sequence_end", "ActivitiesMorph", "all" ]
+  }, {
       "type" : "node",
       "id" : "ExclusiveGateway",
       "title" : "BPMN.STENCILS.EXCLUSIVEGATEWAY.TITLE",

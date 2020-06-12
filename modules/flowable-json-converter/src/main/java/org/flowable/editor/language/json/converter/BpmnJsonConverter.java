@@ -107,6 +107,7 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
         CamelTaskJsonConverter.fillTypes(convertersToBpmnMap, convertersToJsonMap);
         MuleTaskJsonConverter.fillTypes(convertersToBpmnMap, convertersToJsonMap);
         HttpTaskJsonConverter.fillTypes(convertersToBpmnMap, convertersToJsonMap);
+        CaseTaskJsonConverter.fillTypes(convertersToBpmnMap, convertersToJsonMap);
         SendTaskJsonConverter.fillTypes(convertersToBpmnMap, convertersToJsonMap);
         DecisionTaskJsonConverter.fillTypes(convertersToBpmnMap, convertersToJsonMap);
         SendEventTaskJsonConverter.fillTypes(convertersToBpmnMap, convertersToJsonMap);

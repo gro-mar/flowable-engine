@@ -1062,6 +1062,10 @@
           "TITLE" : "Call activity",
           "DESCRIPTION" : "A call activity"
         },
+        "CASETASK" : {
+          "TITLE" : "Case task",
+          "DESCRIPTION" : "A case task"
+        },
         "EXCLUSIVEGATEWAY" : {
           "TITLE" : "Exclusive gateway",
           "DESCRIPTION" : "A choice gateway"

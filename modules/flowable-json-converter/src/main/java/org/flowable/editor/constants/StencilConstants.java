@@ -54,6 +54,7 @@ public interface StencilConstants {
     final String STENCIL_TASK_CAMEL = "CamelTask";
     final String STENCIL_TASK_MULE = "MuleTask";
     final String STENCIL_TASK_HTTP = "HttpTask";
+    final String STENCIL_TASK_CASE = "CaseTask";
     final String STENCIL_TASK_SEND_EVENT = "SendEventTask";
     final String STENCIL_TASK_EXTERNAL_WORKER = "ExternalWorkerTask";
     final String STENCIL_TASK_SHELL = "ShellTask";
