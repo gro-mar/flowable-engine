@@ -22,6 +22,8 @@ import org.flowable.task.api.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Collections;
+
 /**
  * @author Joram Barrez
  */
@@ -35,13 +37,27 @@ public class TaskListenerSpringTest extends SpringFlowableTestCase {
 
         // Completing first task will set variable on process instance
         Task task = taskService.createTaskQuery().singleResult();
-        taskService.complete(task.getId());
+        taskService.complete(task.getId(), Collections.singletonMap("description", "descriptionValue"));
         assertThat(runtimeService.getVariable(processInstance.getId(), "calledInExpression")).isEqualTo("task1-complete");
 
         // Completing second task will set variable on process instance
         task = taskService.createTaskQuery().singleResult();
         taskService.complete(task.getId());
         assertThat(runtimeService.getVariable(processInstance.getId(), "calledThroughNotify")).isEqualTo("task2-notify");
+    }
+
+    @Test
+    @Deployment(resources = "org/flowable/spring/test/taskListener/TaskListenerSpringTest.testTaskListenerDelegateExpression.bpmn20.xml")
+    public void checkUpdateInMainProcess() {
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerDelegateExpression",
+                Collections.singletonMap("descriptions", "initial description value"));
+
+        // Completing first task will set variable on process instance
+        Task task = taskService.createTaskQuery().singleResult();
+        taskService.complete(task.getId(), Collections.singletonMap("taskDescription", "taskDescriptionValue"));
+        assertThat(runtimeService.getVariable(processInstance.getId(), "descriptions"))
+                .isEqualTo("initial description value + taskDescriptionValue");
+
     }
 
 }

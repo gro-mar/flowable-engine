@@ -26,8 +26,11 @@ public class MyTaskListener implements TaskListener {
         delegateTask.setVariable("calledThroughNotify", delegateTask.getName() + "-notify");
     }
 
+    @SuppressWarnings("unused")
     public void calledInExpression(DelegateTask task, String eventName) {
-        task.setVariable("calledInExpression", task.getName() + "-" + eventName);
+        String descriptions = task.getVariable("descriptions", String.class);
+        String taskDescription = task.getVariable("taskDescription", String.class);
+        task.setVariable("descriptions", descriptions + " + " + taskDescription);
     }
 
 }
