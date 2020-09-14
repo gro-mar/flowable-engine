@@ -15,6 +15,7 @@ package org.flowable.examples.bpmn.tasklistener;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.flowable.engine.impl.test.PluggableFlowableTestCase;
@@ -157,12 +158,13 @@ public class TaskListenerTest extends PluggableFlowableTestCase {
     @Test
     @Deployment(resources = { "org/flowable/examples/bpmn/tasklistener/TaskListenerTest.bpmn20.xml" })
     public void testTaskCompleteListener() {
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess");
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess", Collections.singletonMap("processVar", "processVarValue"));
         assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isNull();
         assertThat(runtimeService.getVariable(processInstance.getId(), "expressionValue")).isNull();
 
         // Completing first task will change the description
         org.flowable.task.api.Task task = taskService.createTaskQuery().singleResult();
+        taskService.setVariableLocal(task.getId(), "newTaskVar", "newTaskVarValue");
         taskService.complete(task.getId());
 
         assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isEqualTo("Hello from The Process");
